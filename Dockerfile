@@ -16,4 +16,7 @@ WORKDIR /app
 # Copy the built jar
 COPY --from=build /app/target/*.jar app.jar
 
+# IMPORTANT: Copy the truststore from the build stage to the final image
+COPY --from=build /app/src/main/resources/client.truststore.jks /app/certs/client.truststore.jks
+
 ENTRYPOINT ["java", "-jar", "app.jar"]
